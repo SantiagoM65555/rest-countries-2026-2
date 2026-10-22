@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorador de Países</title>
+  <meta name="description" content="Explora los países del mundo con búsqueda por nombre, filtro por región, detalle en un modal y favoritos que se recuerdan al recargar.">
+  <meta property="og:title" content="Explorador de Países">
+  <meta property="og:description" content="Datos de todos los países con la API REST Countries.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/tailwind.css">
+</head>
+<body class="bg-slate-100 text-slate-900 dark:bg-slate-900 dark:text-white">
+
+  <header class="sticky top-0 z-10 bg-white shadow dark:bg-slate-800">
+    <nav aria-label="Principal" class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <a href="index.html" class="text-xl font-bold text-indigo-700 dark:text-indigo-300">🌍 Explorador de Países</a>
+      <button id="btn-menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"
+        class="rounded-lg border border-slate-300 px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden dark:border-slate-600">☰</button>
+      <ul id="menu" class="absolute top-full right-0 left-0 hidden bg-white p-4 shadow-lg md:static md:flex md:flex-row md:gap-6 md:bg-transparent md:p-0 md:shadow-none dark:bg-slate-800">
+        <li><button type="button" data-vista="todos" class="block w-full rounded-lg px-3 py-2 text-left font-medium hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 aria-[current=page]:text-indigo-700 dark:hover:bg-slate-700 dark:aria-[current=page]:text-indigo-300">Explorar</button></li>
+        <li><button type="button" data-vista="favoritos" class="block w-full rounded-lg px-3 py-2 text-left font-medium hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 aria-[current=page]:text-indigo-700 dark:hover:bg-slate-700 dark:aria-[current=page]:text-indigo-300">♥ Favoritos (<span id="contador-favs">0</span>)</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    <h1 class="mb-4 text-2xl font-bold">Explora los países del mundo</h1>
+
+    <form id="form-busqueda" role="search" class="mb-4 flex flex-col gap-3 md:flex-row">
+      <div class="md:flex-1">
+        <label for="buscador" class="sr-only">Buscar país por nombre</label>
+        <input id="buscador" type="search" placeholder="Buscar país…" autocomplete="off"
+          class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
+      </div>
+      <div>
+        <label for="region" class="sr-only">Filtrar por región</label>
+        <select id="region" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
+          <option value="">Todas las regiones</option>
+          <option value="Africa">África</option>
+          <option value="Americas">América</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europa</option>
+          <option value="Oceania">Oceanía</option>
+          <option value="Antarctic">Antártida</option>
+        </select>
+      </div>
+      <div>
+        <label for="orden" class="sr-only">Ordenar por</label>
+        <select id="orden" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
+          <option value="nombre">Nombre (A-Z)</option>
+          <option value="poblacion">Población (mayor a menor)</option>
+        </select>
+      </div>
+      <button type="submit" class="rounded-lg bg-indigo-700 px-4 py-2 font-medium text-white hover:bg-indigo-800 focus-visible:ring-2 focus-visible:ring-indigo-500">Buscar</button>
+    </form>
+
+    <p id="contador" aria-live="polite" class="mb-4 text-sm text-slate-500 dark:text-slate-400"></p>
+
+    <section id="grilla" aria-label="Resultados" aria-live="polite" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"></section>
+  </main>
+
+  <dialog id="modal" aria-labelledby="modal-titulo" class="m-auto w-[92%] max-w-lg overflow-hidden rounded-2xl bg-white p-0 text-slate-900 shadow-2xl backdrop:bg-black/60 dark:bg-slate-800 dark:text-white">
+    <div id="modal-bandera"></div>
+    <div class="space-y-2 p-5">
+      <h2 id="modal-titulo" class="text-2xl font-bold">Detalle del país</h2>
+      <p id="modal-oficial" class="text-slate-500 dark:text-slate-400"></p>
+      <dl id="modal-datos" class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm"></dl>
+      <form method="dialog" class="pt-3">
+        <button type="submit" class="rounded-lg bg-indigo-700 px-4 py-2 font-medium text-white hover:bg-indigo-800 focus-visible:ring-2 focus-visible:ring-indigo-500">Cerrar</button>
+      </form>
+    </div>
+  </dialog>
+
+  <footer class="mt-8 border-t border-slate-300 py-6 text-center text-sm text-slate-500 dark:border-slate-600 dark:text-slate-400">
+    <p>Datos de <a class="text-indigo-700 underline dark:text-indigo-300" href="https://restcountries.com">REST Countries</a></p>
+    <p>Santiago Muñoz Alvarán · Programación para entornos web 1 · Universidad de Caldas</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
