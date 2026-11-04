@@ -15,12 +15,12 @@
 
   <header class="sticky top-0 z-10 bg-white shadow dark:bg-slate-800">
     <nav aria-label="Principal" class="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-      <a href="index.html" class="text-xl font-bold text-indigo-700 dark:text-indigo-300">🌍 Explorador de Países</a>
+      <a href="index.html" class="text-xl font-bold text-indigo-700 dark:text-indigo-300">Explorador de Países</a>
       <button id="btn-menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"
         class="rounded-lg border border-slate-300 px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 md:hidden dark:border-slate-600">☰</button>
       <ul id="menu" class="absolute top-full right-0 left-0 hidden bg-white p-4 shadow-lg md:static md:flex md:flex-row md:gap-6 md:bg-transparent md:p-0 md:shadow-none dark:bg-slate-800">
         <li><button type="button" data-vista="todos" class="block w-full rounded-lg px-3 py-2 text-left font-medium hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 aria-[current=page]:text-indigo-700 dark:hover:bg-slate-700 dark:aria-[current=page]:text-indigo-300">Explorar</button></li>
-        <li><button type="button" data-vista="favoritos" class="block w-full rounded-lg px-3 py-2 text-left font-medium hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 aria-[current=page]:text-indigo-700 dark:hover:bg-slate-700 dark:aria-[current=page]:text-indigo-300">♥ Favoritos (<span id="contador-favs">0</span>)</button></li>
+        <li><button type="button" data-vista="favoritos" class="block w-full rounded-lg px-3 py-2 text-left font-medium hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-indigo-500 aria-[current=page]:text-indigo-700 dark:hover:bg-slate-700 dark:aria-[current=page]:text-indigo-300">Favoritos (<span id="contador-favs">0</span>)</button></li>
       </ul>
     </nav>
   </header>
@@ -35,9 +35,9 @@
           class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
       </div>
       <div>
-        <label for="region" class="sr-only">Filtrar por región</label>
+        <label for="region" class="sr-only">Filtrar por continente</label>
         <select id="region" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus-visible:ring-2 focus-visible:ring-indigo-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white">
-          <option value="">Todas las regiones</option>
+          <option value="">Todos los continentes</option>
           <option value="Africa">África</option>
           <option value="Americas">América</option>
           <option value="Asia">Asia</option>
